@@ -1,0 +1,581 @@
+\documentclass[fleqn]{article}
+
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{stmaryrd}
+\usepackage{mathrsfs}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage[a4paper, margin=3cm]{geometry}  % 1-inch margin on all sides
+\setlength{\mathindent}{2em}  % Set the indent size (1em = one "tab" size)
+
+\titlespacing*{\section}
+{0pt} % left margin
+{4em} % space above
+{1em} % space below
+
+\author{}
+\title{2MBA10 Sets, Logic and Mathematical Language}
+\date{}
+
+\begin{document}
+\large
+\maketitle
+\vspace{-4em}
+
+
+The full lecture notes were made and are curated by prof. dr. F.G.M.T. (Hans) Cuypers. This merely
+serves as a summary of the important definitions, theoroms, and propositions
+without proofs (mostly). Note that chapter numbers do \underline{not} match between
+the original and this summary and this document may \underline{not} contain
+all definitions, proofs, and propositions.
+
+\underline{Examples} and \underline{proofs} can be found in the original lecture notes for 2MBA10.
+
+\section{Sets}
+\subsection{Cartesian Product}
+The Cartesian Product $A_1 \times \dots \times A_k$ of sets $A_1, \dots, A_k$
+is the set of all ordered $k$-tuples $(a_1, \dots, a_k)$ where $a_i \in A_i$ for $1 \leq i \leq k$.
+In particular, if $A$ and $B$ are sets, then
+\begin{equation*}
+    A \times B = \left\{ (a,b) | a \in A, b \in B \right\}
+\end{equation*}
+
+\subsection{Partition}
+Let $S$ be a nonempty set. A collection $\Pi$ of subsets of $S$ is called a \textit{partition}
+if and only if
+\begin{enumerate}
+    \item $\emptyset \notin \Pi$.
+    \item $\bigcup_{X\in\Pi} X = S$.
+    \item $\forall X \neq Y \in \Pi \left[ X \cap Y = \emptyset \right]$.
+\end{enumerate}
+
+\section{Relations}
+\subsection{(Binary) Relations}
+A (binary) \textit{relation} $R$ between the sets $S$ and $T$ is a subset of the Cartesian product $S \times T$.\\
+\\
+Let $R$ be a relation from a set $S$ to a set $T$. Then for each element $a \in S$
+we define $[a]_R$ to be the set
+\begin{equation*}
+    [a]_R \coloneqq \left\{\ b \in T\ |\ aRb\ \right\}
+\end{equation*}
+This set is called the \textit{($R$-)image} of $a$.
+For $b \in T$ we define $_R[b]$ to be the set
+\begin{equation*}
+    _R[b] \coloneqq \left\{\ a \in S\ |\ aRb\ \right\}
+\end{equation*}
+This set is called the \textit{($R$-)pre-image} of $b$ or the \textit{$R$-fiber} of $b$.
+
+\subsection{Adjacency Matrix}
+If $S = \left\{ s_1, \dots, s_n \right\}$ and $T = \left\{ t_1, \dots t_m \right\}$
+are finite sets and $R \subseteq S \times T$ is a binary relation, then the
+\textit{adjacency matrix} $A_R$ of the relation $R$ is the $n \times m$ matrix whose
+rows are indexed by $S$ and columns by $T$ defined by
+\begin{equation*}
+    A_{s,t}= \begin{cases}
+        1 & \text{if } (s,t) \in R; \\
+        0 & \text{otherwise}.
+    \end{cases}
+\end{equation*}
+
+\subsection{Properties}
+\label{sec:Properties}
+Let $R$ be a relation on the set $S$ then,
+\begin{itemize}
+    \item $R \text{ is }\textit{reflexive} \iff \forall x \in S [ (x,x) \in R ]$
+    \item $R \text{ is }\textit{irreflexive} \iff \forall x \in S [(x,x) \notin R ]$
+    \item $R \text{ is }\textit{symmetric} \iff \forall x,y \in S [ xRy \implies yRx ]$
+    \item $R \text{ is }\textit{anti-symmetric} \iff \forall x,y \in S [ xRy \land yRx \implies x = y ]$
+    \item $R \text{ is }\textit{transitive} \iff \forall x,y,z \in S [ xRy \land yRz \implies xRz ]$
+\end{itemize}
+
+\subsection{Directed Graph}
+A \textit{directed graph} of a set $V$ is an element of $V \times V$. If $e = (v,w)$
+is a directed edge of $V$, then $v$ is called its \textit{tail} and $w$ is called
+its \textit{head}. Both $v$ and $w$ are called \textit{end points} of the edge $e$.
+The \textit{reverse} of the edge $e$ is the edge $(w,v)$. A \textit{loop} is an edge
+from a vertex to itself. \\
+\\
+Let $\Gamma = (V,E)$ be a digraph and $v \in V$ be a vertex. The \textit{indegree}
+of $v$ is the number of edges with $v$ as head. The \textit{outdegree} is the number
+of edges with $v$ as tail.
+
+A \textit{directed graph} (also called \textit{digraph}) $\Gamma = (V,E)$ consists
+of a set $V$ of \textit{vertices} and a subset $E$ of $V \times V$ (directed) \textit{edges}.
+The elements of $V$ are called \textit{vertices} of $\Gamma$ and the elements of
+$E$ the \textit{edges} of $\Gamma$.
+
+\subsection{Equivalence Relation}
+A relation $R$ on a set $S$ is an \textit{equivalence relation} if and only if
+$R$ is reflexive, symmetric, and transitive. \\
+\\
+Let $R$ be an equivalence relation on a set $S$. Then the sets $[s]_R$, where $s \in S$,
+are called the \textit{equivalence classes} on S.
+
+We denote the set of $R$-equivalence classes on $S$ by $S/R$.
+
+\subsection{Transitive Closure}
+Let $\mathscr{C}$ be the collection of all transitive relations $R'$ for which $R \subseteq R'$.
+We define the transitive closure $\bar{R}$ of the relation $R$ on a set $S$ as
+\begin{equation*}
+    \bar{R} = \bigcap_{R' \in \mathscr{C}} R'.
+\end{equation*}
+That is, $\bar{R}$ is the smallest possible relation for which $R \subseteq \bar{R}$
+and also is transitive.
+
+One can define such a closure for any property as listed in section \hyperref[sec:Properties]{2.3}.
+
+\section{Maps}
+\subsection{Maps and Partial Maps}
+A relation $F$ from a set $A$ to a set $B$ is called a \textit{map} or a \textit{function}
+from $A$ to $B$ if for each $a \in A$ there is one and only one $b \in B$ with $aFb$.
+
+If $F$ is a map from $A$ to $B$, we write this as $F \colon A \to B$. Moreover, if
+$a \in A$ and $b \in B$ is the unique element with $aFb$, we write $b = F(a)$.
+
+The set of all maps from $A$ to $B$ is denoted by $B^A$.
+
+A \textit{partial map} $F$ from a set $A$ to a set $B$ is a relation with the property
+that for each $a \in A$ there is at most one $b \in B$ with $aFb$. In other words,
+it is a map from a subset $A' \subset A$ to $B$, where $A'$ consists of those elements
+$a \in A$ for which there exists a $b \in B$ with $aFb$.
+
+\subsection{Properties of Maps}
+A map $f:A \to B$ is called \textit{surjective}, if for every $b \in B$ there is
+at least one $a \in A$ with $b = f(a)$. In other words, $\text{Im}(f) = B$.
+
+A map $f:A \to B$ is called \textit{injective}, if for every $b \in B$ there is
+at most one  $a \in A$ with $b = f(a)$. In other words, $f$ is injective if for any
+elements $a,a' \in A$ we find $f(a) = f(a') \implies a = a'$.
+
+A map $f:A \to B$ is called \textit{bijective}, if it is both injective and surjective.
+In other words, for each $b \in B$ there is exactly one unique $a \in A$ with $b = f(a)$.
+
+\subsection{Pigeonhole Principle}
+Let $A$ and $B$ be sets and let $f:A \to B$ be
+a map.
+\begin{enumerate}
+    \item If $|A| < |B|$, then $f$ cannot be surjective.
+    \item If $|A| > |B|$, then $f$ cannot be injective.
+    \item If $|A| = |B|$, then $f$ is injective if and only if $f$ is surjective.
+\end{enumerate}
+
+\subsection{Permutations}
+Let $X$ be a set.
+A bijection of $X$ to itself is called a \textit{permuattion} of $X$. The set of
+all permutations of $X$ is denoted by $\text{Sym}(X)$. It is called the \textit{symmetric group}
+on $X$.
+
+The product $g \cdot h$ of two permutations $g,h \in \text{Sym}(X)$ is defined as
+the composition $g \circ h = g(h(x))$.
+
+If $X = {1, \dots, n}$, we also write $\text{Sym}_n$ instead of $\text{Sym}(X)$.
+Furthermore, a permutation $f$ of $X$ is often given in list notation:
+$[f(1), f(2), \dots, f(n)]$.\\
+\\
+$\text{Sym}_n$ has exactly $n!$ elements.\\
+\\
+The order of a permutation $\sigma$ is the smallest $m \in \mathbb{Z}^+$ such that
+$\sigma^m = I$ for $I$ the identity permutation.\\
+\\
+The \textit{fixed points} of a permutation $\sigma$ on the set $X$ are the elements
+$x \in X$ for which $\sigma(x) = x$. The set of fixed points is thus
+\begin{equation*}
+    \text{fix}(\sigma) = \left\{ x \in X | \sigma(x) = x \right\}
+\end{equation*}
+
+The \textit{support} of $\sigma$ is the compliment of $\text{fix}(\sigma)$. It is
+denoted by $\text{support}(\sigma)$.
+
+\subsection{Permutation Cycles}
+Every permutation in $\text{Sym}_n$ is a product of disjoint cycles. This product
+is unique up to rearrangements of the factors.
+
+The cycle structure of a permutation $\sigma$ is the unordered sequence of the cycle lengths
+in the expression of $\sigma$ as a product of disjoint cycles.\\
+\\
+The permutations $\sigma, \rho \in \text{Sym}_n$ have the same cycle structure if
+and only if there exists a $\tau \in \text{Sym}_n$ with $\sigma = \tau \cdot \rho \cdot \tau^{-1}$.\\
+\\
+Let $\sigma \in \text{Sym}_n$. The sign (signum) of $\sigma$, denoted by $\text{sign}(\sigma)$,
+is defined as
+\begin{equation*}
+    \text{sign}(\sigma)= \begin{cases}
+        1 & \text{if $\sigma$ can be written as a product of an even number of 2-cycles}; \\
+        -1 & \text{if $\sigma$ can be written as a product of an odd number of 2-cycles}.
+    \end{cases}
+\end{equation*}
+We say $\sigma$ is even if $\text{sign}(\sigma) = 1$, and $\sigma$ is off if $\text{sign}(\sigma) = -1$.
+
+\begin{equation*}
+    \forall \sigma,\tau \in \text{Sym}_n \left[ \text{sign}(\sigma \cdot \tau) = \text{sign}(\sigma) \cdot \text{sign}(\tau)  \right]
+\end{equation*}
+
+\subsection{Alternating Group}
+By $\text{Alt}_n$ we denote the set of even permutations in $\text{Sym}_n$.
+We call $\text{Alt}_n$ the \textit{alternating group} on $n$ letters.
+
+For $n>1$, $\text{Alt}_n$ containts exactly $\frac{n!}{2}$ elements.
+
+Every permutation $\sigma \in \text{Alt}_n$ is a product of 3-cycles.
+
+\section{Orders}
+\subsection{Orders and Posets}
+A relation $\sqsubseteq$ on a set $P$ is called an \textit{order} if it is
+reflexive, anti-symmetric and transitive.
+
+The pair $(P,\sqsubseteq)$ is called a \textit{partially ordered set} or \textit{poset}
+
+Two elements $x,y \in P$ in a poset $(P,\sqsubseteq)$ are called \textit{comparable}
+if $x \sqsubseteq y$ or $y \sqsubseteq x$. The elements are called \textit{incomparable}
+if $x \not\sqsubseteq y$ and $y \not\sqsubseteq x$.
+
+If any two elements $x,y \in P$ are comparable in a poset $(P, \sqsubseteq)$, then
+the relation $\sqsubseteq$ is called a \textit{linear order}.
+
+\subsection{Hasse Diagram}
+Let $(P, \sqsubseteq)$ be a poset. The graph with vertex set $P$ and two vertices
+$x,y \in P$ are adjacent if and only if $x \sqsubseteq y$ (or $y \sqsubseteq x$)
+and there is no $x \in P$ different from $x$ and $y$ with $x \sqsubseteq z$ and $z \sqsubseteq y$.
+
+\subsection{Maximal and Minimal Elements}
+Let $(P, \sqsubseteq)$ be a poset and $A \subseteq P$ a subset of $P$. An element
+$a \in A$ is called the \textit{maximum} of $A$, if for all $a' \in A$ we have $a' \sqsubseteq a$
+A maximum element is unique.
+
+An element $a \in A$ is called \textit{maximal} of for all $a' \in A$ we have either 
+$a' \sqsubseteq a$ or $a'$ and $a$ are \textit{incomparable}.
+
+Similarly we can define the notion of a \textit{minimum} and \textit{minimal} element.
+
+If the poset $(P, \sqsubseteq)$ has a maximum, then this is often denoted as $\top$.
+The minimum is often denoted by $\bot$.
+
+If a poset $(P, \sqsubseteq)$ has a minimum $\bot$, then the minimal elements
+of $P \setminus {\bot}$ are called the \textit{atoms} of $P$.
+
+\subsection{Supremum and Infimum}
+If $(P, \sqsubseteq)$ is a poset and $A \subseteq P$, then an \textit{upperbound}
+for $A$ is an element $u$ with $a \sqsubseteq u$ for all $a \in A$.
+
+A \textit{lowerbound} for $A$ is an element $u$ with $u \sqsubseteq a$ for all $a \in A$.
+
+If the set of all upperbounds of $A$ has a minimal element, then this element is called
+the \textit{least upperbound} of \textit{supremum} of $A$. Such an element, if it exists,
+is denoted by $\text{sup} A$. If the set of all lowerbounds of $A$ has a maximal element,
+then this element is called the \textit{largest lowerbound} or \textit{infimum} of $A$.
+If it exists, the infimum of $A$ is denoted by $\text{inf} A$.
+
+\subsection{Chains}
+An \textit{ascending chain} in a poset $(P, \sqsubseteq)$ is a (finite or infinite)
+sequence $p_0 \sqsubseteq p_1 \sqsubseteq \dots$ of elements $p_i \in P$. A \textit{descending chain}
+in $(P, \sqsubseteq)$ is a (finite or infinite) sequence of elements $p_i$, $i \geq 0$ with
+$p_0 \sqsupseteq p_1 \sqsupseteq \dots$ of elements $p_i \in P$.
+
+The poset $(P, \sqsubseteq)$ is called \textit{well founded} if any descending chain is finite.
+In other words, the topoligically ordered list on $(P, \sqsubseteq)$ of all elements
+of $P$ has a smallest element.
+
+\section{Recursion and Induction}
+\subsection{Binomials}
+$\binom{n}{k} = \frac{n!}{k! \cdot (n - k)!}$
+
+\subsection{Principle of Natural Induction}
+Suppose $P(n)$ is a predicate for $n \in \mathbb{Z}$. Let $b \in \mathbb{Z}$.
+If the following holds:
+\begin{enumerate}
+    \item $P(b)$ is true;
+    \item for all $k \in \mathbb{Z}$, $k \geq b$ we have that $P(k) \implies P(k+1)$.
+\end{enumerate}
+Then $P(n)$ is true for all $n \geq b$.
+
+\subsection{Principle of Strong Induction}
+Suppose $P(n)$ is a predicate for $n \in \mathbb{Z}$. Let $b \in \mathbb{Z}$.
+If the following holds:
+\begin{enumerate}
+    \item $P(b)$ is true;
+    \item for all $k \in \mathbb{Z}$, $k \geq b$ we have that $P(b), P(b+1), \dots, P(k-1)$
+        and $P(k)$ together imply $P(k+1)$.
+\end{enumerate}
+Then $P(n)$ is true for all $n \geq b$.
+
+\subsection{Minimal Counter Example}
+Let $P(n)$ be a predicate for all $n \in \mathbb{Z}$. Let $b \in \mathbb{Z}$. If
+the statement that $P(n)$ is true for all $n \in \mathbb{Z}, n \geq b$, is \textit{not true},
+then there is a \textit{minimal counter example}. That means, there is an $m \in \mathbb{Z}, m \geq b$ with
+\begin{enumerate}
+    \item $P(m)$ false and
+    \item $P(n)$ true for all $n \in \mathbb{N}$ with $b \leq n < m$.
+\end{enumerate}
+
+\subsection{Structural Induction}
+If a structure of data types is defined recursively, then we can use this recursive
+definition to derive properties by induction.
+
+In particular
+\begin{itemize}
+    \item if all basic elements of a recursive definition satisfy some property $P$, and
+    \item if newly constructed elements satisfy $P$, assuming the elements used in
+        the construction already satisfy $P$,
+\end{itemize}
+then all elements in the structure satisfy $P$.
+
+\subsection{Induction on a Well Founded Order}
+Let $(P, \sqsubseteq)$ be a well founded order. Suppose $Q(X)$ is a predicate
+for all $x \in P$ satisfying:
+\begin{enumerate}
+    \item $Q(b)$ is true for all minimal elements $b \in P$.
+    \item If $x \in P$ and $Q(y)$ is true for all $y \in P$ with $y \sqsubseteq x$
+        but $y \neq x$, then $Q(x)$ holds.
+\end{enumerate}
+Then $Q(x)$ holds for all $x \in P$.
+
+\section{Cardinalities}
+\subsection{Equivalent Cradinalities}
+Two sets $A$ and $B$ have the \textit{same cardinality} if and only if there
+exists a bijection from $A$ to $B$.
+
+Having the same cardinality is an equivalence relation.
+
+\subsection{Countability}
+A set is called \textit{finite} if it is empty or has the same cardinality as the set\\
+$\mathbb{N}_n \coloneqq \left\{ 1,\dots, n \right\}$ and \textit{infinite} otherwise.\\
+\\
+A set is called \textit{countable} if it is finite or has cardinality $\aleph_0 = |\mathbb{N}|$.
+An infinite set that is not countable is called \textit{uncountable}.
+
+Every infinite set contains an infinite countable subset.\\
+\\
+Let $A$ be a set. If there is a surjective map from $\mathbb{N}$ to $A$, then $A$ is countable.
+
+Let $A,B$ be sets with $A$ countable and $f : A \to B$ surjective, then $B$ is countable.\\
+\\
+Let $\mathscr{C}$ be a countable collection of countable sets. Then $\bigcup_{A \in \mathscr{C}} A$ is countable.\\
+\\
+If $A$ is an infinite set and $B$ is a finite set then $|A| = |A \cup B|$.\\
+\\
+If the set $A$ is infinite, then $\mathscr{P}(A)$ is uncountable.\\
+\begin{equation*}
+    | \mathbb{R} | = | \mathscr{P}(\mathbb{N}) | = | \left\{ 0,1 \right\}^{\mathbb{N}} | = | [0,1) |
+\end{equation*}
+
+\subsection{Cantor-Schr\"oder-Bernstein Theorom}
+Let $A$ and $B$ be sets and assume that there are two maps $f : A \to B$ and
+$g : B \to A$ which are both injective. Then there exists a bijection $h : A \to B$.
+So also, $|A| = |B|$.
+
+\section{Additional Axioms of Set Theory}
+\subsection{Axiom of Choice}
+Let $\mathscr{C}$ be a collection of nonempty sets. Then there exists a map
+\begin{equation*}
+    f : \mathscr{C} \to \bigcup_{A \in \mathscr{C}} A
+\end{equation*}
+with $f(A) \in A$.
+
+The image of $f$ is a subset of $\bigcup_{A \in \mathscr{C}} A$.
+
+The function $f$ is called a \textit{choice function}.\\
+\\
+In other words, the Axiom of Choice asserts that given a collection of non-empty sets,
+it is possible to select exactly one element from each set, even if there is no
+explicit rule for making the selection.
+
+\subsection{Axiom of Regularity}
+Let $X$ be a nonempty set of sets. Then $X$ contains an element $Y$ with $X \cap Y = \emptyset$.
+
+\section{Integer Arithmetic}
+\subsection{Divisors and Multiples}
+Let $a,b \in \mathbb{Z}$. We call $b$ a \textit{divisor} of $a$, if there is a $q \in \mathbb{Z}$
+such that $a = q \cdot b$. We call $q$ the \textit{quotient} of $a$ by $b$.
+
+If $b$ is a divisor of $a$, we also say that $b$ \textit{divides} $a$, or $a$ is
+a \textit{multiple} of $b$, or $a$ is \textit{divisible} by $b$. We write this as $b | a$.
+
+\subsection{Division with remainder}
+If $a \in \mathbb{Z}$ and $b \in \mathbb{Z}\setminus{0}$, then there exist
+unique $r,q \in \mathbb{Z}$ such that $a = q \cdot b + r, |r| < |b|, \text{ and } b \cdot r \geq 0$.
+
+\subsection{Common Divisors}
+Let $a,b \in \mathbb{Z}$.
+\begin{itemize}
+    \item $d \in \mathbb{Z}$ is a \textit{common divisor} if $d|a \land d|b$.
+    \item If $a \neq 0 \land b \neq 0$, the \textit{largest common divisor} of 
+        $a$ and $b$ exists and is called the \textit{greatest common divisor (gcd)} of $a$ and $b$.
+        Also denoted $\text{gcd}(a,b)$.
+    \item If $\text{gcd}(a,b) = 1$, then $a$ and $b$ are called \textit{relatively prime}. 
+\end{itemize}
+
+Let $\mathbb{P}$ denote the set of all primes. Then
+\begin{equation*}
+    \forall p \in \mathbb{P}\ \forall n \in \mathbb{N} \left[ \text{gcd}(p,n) = 1 \right]
+\end{equation*}
+
+\subsection{Common Multiples}
+Let $a,b \in \mathbb{N}$. Then
+\begin{itemize}
+    \item $c \in \mathbb{Z}$ is a \textit{common multiple} of $a$ and $b$ if $c$ is a multiple of $a$ and of $b$.
+    \item The smallest positive common multiple of $a$ and $b$ is called the
+        \textit{least common divisor (lcm)} of $a$ and $b$. Also denoted
+        $\text{lcm}(a,b)$.
+\end{itemize}
+
+\subsection{Relation Between gcd and lcm}
+Let $a,b \in \mathbb{N}$. Then $a \cdot b = \text{gcd}(a,b) \cdot \text{lcm}(a,b)$.
+
+\section{Primes}
+A \textit{prime} is an integer $p$ greater than $1$ that has no positive divisors
+other than $1$ and $p$ itself.
+
+There are infinitely many primes.
+
+\subsection{Prime Number Theorom}
+Let $\text{primes}(n)$ be the number of primes in the interval $\{1,\dots,n\}$.
+Then we have
+\begin{equation*}
+    \lim_{n \to \infty^-} \left( \frac{\text{primes}(n)}{\frac{n}{\ln n}} \right) = 1.
+\end{equation*}
+
+\subsection{Prime Order}
+We define the function $\text{ord}_p(a)$ as the maximum $n$ for which $p^n | a$.
+For $a \in \mathbb{Z}, n \in \mathbb{N}, p \in \mathbb{P}$.\\
+\\
+We can write any positive integer $a$ as a product of primes using
+\begin{equation*}
+    a = \prod_{p\in\mathbb{P}} p^{\text{ord}_p(a)}.
+\end{equation*}
+\\
+If $a$ and $b$ are positive integers, then
+\begin{equation*}
+    \text{gcd}(a,b) = \prod_{p\in\mathbb{P}} p^{min(\text{ord}_p(a),\text{ord}_p(b))}
+\end{equation*}
+and
+\begin{equation*}
+    \text{lcm}(a,b) = \prod_{p\in\mathbb{P}} p^{max(\text{ord}_p(a)),\text{ord}_p(b)}
+\end{equation*}
+
+In particular we have
+\begin{equation*}
+    a \cdot b = \text{gcd}(a,b) \cdot \text{lcm}(a,b).
+\end{equation*}
+
+\section{Modular Arithmetic}
+Let $n$ be an integer. On the set $\mathbb{Z}$ we define the relation \textit{congruence modulo $n$}
+as follows: Integers $a$ and $b$ are \textit{congruent module $n$} if and only if
+$n | a -b$.
+
+We write,
+\begin{equation*}
+    a \equiv b \mod n
+\end{equation*}
+to denote $a$ and $b$ are congruent modulo $n$.\\
+\\
+Let $n$ be an integer. The relation conrguence modulo $n$ is an equivalence relation.
+For nonzero $n$, there are exactly $n$ distinct equivalence classes:
+\begin{equation*}
+    n \cdot \mathbb{Z}, 1 + n \cdot \mathbb{Z}, \dots, n-1 + n \cdot \mathbb{Z}
+\end{equation*}
+The set of equivalence classes of $\mathbb{Z}$ modulo $n$ is denoted by $\mathbb{Z} / n\mathbb{Z}$.
+
+\subsection{Binary Operations: Addition and Multiplication}
+On $\mathbb{Z}/n\mathbb{Z}$ we define two binary operations, an \textit{addition}
+and a \textit{multiplication}, by
+\begin{itemize}
+    \item Addition: $x \mod n + y \mod n = x + y \mod n$.
+    \item Multiplication: $x \mod n \cdot y \mod n = x \cdot y \mod n$.
+\end{itemize}
+
+\subsection{Properties of Modular Arithmetic}
+Let $n$ be an integer bigger than $1$. For all integers $a, b, c$ we have the following equalities.
+\begin{itemize}
+    \item Commutativity of addition.
+    \item Commutativity of multiplication.
+    \item Associativity of addition.
+    \item Associativity of multiplication.
+    \item Distributivity of multiplication of addition.
+\end{itemize}
+
+\subsection{Invertible Elements and Zero Divisors}
+An element $a \in \mathbb{Z}/n\mathbb{Z}$ is called the \textit{invertible} if there
+is an element $b$, called \textit{inverse} of $a$ such that $a \cdot b = 1$.
+
+If $a$ is invertible, its inverse (which is unique) will be denoted $a^{-1}$.
+
+The set of all invertible elements in $\mathbb{Z}/n\mathbb{Z}$ will be denoted by
+$\mathbb{Z}/n\mathbb{Z}^\times$. This set is also called the \textit{multiplicative group}
+of $\mathbb{Z}/n\mathbb{Z}$.\\
+\\
+An element $a \in \mathbb{Z}/n\mathbb{Z}$ is called a \textit{zero divisor} if there
+is an element $b \neq 0$ such that $a \cdot b = 0$.\\
+\\
+An element is either invertible or a zero divisor.
+
+\subsection{Characterization of Modular Invertibility}
+Let $n > 1$ and $a \in \mathbb{Z}$.
+\begin{enumerate}
+    \item The class $a\ (\text{mod}\ n)$ in $\mathbb{Z}/n\mathbb{Z}$ has a multiplicative
+        inverse if and only if $\text{gcd}(a,n) = 1$.
+    \item If $a$ and $n$ are relatively prime, then the inverse of $a\ (\text{mod}\ n)$
+        is the class $\text{Extgcd}(a,n)_2\ (\text{mod}\ n)$.
+    \item In $\mathbb{Z}/n\mathbb{Z}$, every class distinct from $0$ has an inverse
+        if and only if $n$ is prime.
+\end{enumerate}
+
+\subsection{Zero Divisor Characterization}
+Let $n > 1$ and $a \in \mathbb{Z}$.
+\begin{enumerate}
+    \item The class $a\ (\text{mod}\ n)$ in $\mathbb{Z}/n\mathbb{Z}$ is a zero divisor
+        if and only if $\text{gcd}(a,n) > 1$ and $a\ (\text{mod}\ n)$ is nonzero.
+    \item The residue ring $\mathbb{Z}/n\mathbb{Z}$ has no zero divisors if and only if $n$ is prime.
+    \item If $a$ is a zero divisor in $\mathbb{Z}/n\mathbb{Z}$ and $b$ an arbitrary element,
+        then $a \cdot b$ is either $0$ or a zero divisor.
+\end{enumerate}
+
+\subsection{Fermat's Little Theorom}
+Let $p$ be a prime. For every integer $a$ we have
+\begin{equation*}
+    a^p \equiv a \mod p.
+\end{equation*}
+In particular if $a$ is not $0\ (\text{mod}\ p)$ then
+\begin{equation*}
+    a^{p-1} \equiv 1 \mod p.
+\end{equation*}
+
+\subsection{Euler Totient Function}
+The Euler totient function $\Phi : \mathbb{N} \to \mathbb{N}$ is defined by
+\begin{equation*}
+    \Phi(n) = |\mathbb{Z}/m\mathbb{Z}^{\times}|
+\end{equation*}
+for all $n \in \mathbb{N}$ with $n > 1$, and by $\Phi(1) = 1$.\\
+\\
+The Euler Totient Function satisfies the following properties.
+\begin{enumerate}
+    \item Suppose that $n$ and $m$ are positive integers. If $\text{gcd}(n,m) = 1$, then
+        \begin{equation*}
+            \Phi(n \cdot m) = \Phi(n) \cdot \Phi(m).
+        \end{equation*}
+    \item If $p$ is a prime and $n$ a positive integer, then
+        \begin{equation*}
+            \Phi(p^n) = p^n - p^{n-1}.
+        \end{equation*}
+    \item If $a$ is positive integer with distrinct prime divisors $p_1,\dots,p_s$
+        and prime factorization $a = \prod_{i=1}^s (p_i)^{n_i}$, then
+        \begin{equation*}
+            \Phi(a) = \prod_{i=1}^s \left( (p_i)^{n_i} - (p_i)^{n_i-1} \right).
+        \end{equation*}
+    \item The Euler totient function satisfies the following recursion
+        \begin{equation*}
+            \Phi(1)= 1
+        \end{equation*}
+        and
+        \begin{equation*}
+            \Phi(n) = n - \sum_{d \in \left\{ d \in \mathbb{N}\ |\  d|n \right\}} \Phi(d).
+        \end{equation*}
+\end{enumerate}
+
+\subsection{Euler's Theorom}
+Suppose $n$ is an integer with $n \geq 2$. Let $a$ be an element of $\mathbb{Z}/n\mathbb{Z}^\times$.\\
+Then $a^{\Phi(n)} \equiv 1 \mod n$.
+
+\end{document}
